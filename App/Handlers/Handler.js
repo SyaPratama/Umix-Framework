@@ -4,18 +4,17 @@ export class Handler{
     constructor(Service)
     {
         this.Service = Service;
-        this.main = this.main.bind(this);
+        this.login = this.login.bind(this);
+        this.dashboard = this.dashboard.bind(this);
     }
 
-    async main()
+    async login(req,h)
     {
-        const conn = new Database();
-        let db = {
-            data: "Rasya"
-        }
-        const res =  await conn.getAll(db.data);
-        console.log(res);
-        console.log('Handler Running');
-        return "Hi";
+        return await this.Service.login(req,h)
+    }
+
+    async dashboard(req,h)
+    {
+        return await this.Service.dashboard(req,h);
     }
 }

@@ -2,7 +2,7 @@ import { Handler } from "../../Handlers/Handler.js";
 import { Route } from "../../Routes/Routes.js";
 
 export const Plugins = {
-    name: "examplePlugin",
+    name: "plugin",
     version: '1.0.0',
     register: async function (server, { Service })
     {

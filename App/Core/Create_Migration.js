@@ -1,5 +1,6 @@
 import path from "path";
 import { input, select } from "@inquirer/prompts";
+import "dotenv/config";
 import fs from "fs";
 
 async function generateTable(migrationPath, table) {
@@ -7,7 +8,7 @@ async function generateTable(migrationPath, table) {
   const nameTable = `${date}_create_table_${table}`;
   const fullPath = path.join(migrationPath, nameTable + ".js");
   const fileContent = `export default { 
-    up:"CREATE TABLE ${table} (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)",
+    up:"CREATE TABLE IF NOT EXISTS  ${table} (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)",
     down:"DROP TABLE ${table}" 
 }
     `;

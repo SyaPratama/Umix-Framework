@@ -20,12 +20,6 @@ export class Database {
         namedPlaceholders: true,
       });
 
-      connect.getConnection().then(con => {
-        console.info('Connected to mysql Database');
-        con.release();
-      }).catch(err => {
-        console.error('Unable to connect mysql database : ',err);
-      });
       this.pool = connect;
       return connect;
     } catch (e) {
@@ -36,10 +30,11 @@ export class Database {
         password: process.env.DB_PASS,
         namedPlaceholders: true,
       });
-      const regex = new RegExp(/\bUnknown database\b/)
-      if(regex.test(e.message))
-      {
-        await connect?.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);
+      const regex = new RegExp(/\bUnknown database\b/);
+      if (regex.test(e.message)) {
+        await connect?.query(
+          `CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`
+        );
         return;
       }
       throw e;
@@ -48,12 +43,26 @@ export class Database {
 
   async getAll(table) {
     try {
-      await this.connection();
-      const query = 'SELECT * FROM :table';
-      const res = await this.pool.query(query,{ table });
-      return res[0];
+      if (table) {
+        await this.connection();
+        const res = await this.pool?.execute(`SELECT * FROM ${table}`);
+        return res[0];
+      }
     } catch (e) {
       console.info(e);
+      throw new Error(e);
+    }
+  }
+
+  async find(table, id) {
+    try {
+      if (table && id) {
+        await this.connection();
+        const res = await this.pool?.execute(`SELECT * FROM ${table} WHERE id = :id`,{ id });
+        return res[0]
+      }
+    } catch (e) {
+      console.error(e);
       throw new Error(e);
     }
   }
