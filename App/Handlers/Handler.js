@@ -7,15 +7,8 @@ export class Handler{
         this.main = this.main.bind(this);
     }
 
-    async main()
+    async main(req,h)
     {
-        const conn = new Database();
-        let db = {
-            data: "Rasya"
-        }
-        const res =  await conn.getAll(db.data);
-        console.log(res);
-        console.log('Handler Running');
-        return "Hi";
+        return await this.Service.void(req,h)
     }
 }

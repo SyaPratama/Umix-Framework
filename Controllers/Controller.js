@@ -3,8 +3,8 @@ class Controller {
     {
         this.void = this.void.bind(this);
     }
-    void(){
-        console.log('Controller');
+    void(req,h){
+        return h.view('template/home', { title: "Test", message: "Test Message"});
     }
 }
 
