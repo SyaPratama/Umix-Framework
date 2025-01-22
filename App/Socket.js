@@ -1,8 +1,8 @@
 "use strict";
 import Hapi from "@hapi/hapi";
 import "dotenv/config";
-import { Plugins } from "./Plugins/Plugin.js";
 import { exploreFolder } from "./Lib/loadFile.js";
+import { ListPlugin } from "./Plugins/ListPlugin.js";
 
 (async () => {
   const Server = Hapi.server({
@@ -16,11 +16,7 @@ import { exploreFolder } from "./Lib/loadFile.js";
     },
   });
 
-  await Server.register([
-    {
-      plugin: Plugins,
-    },
-  ]);
+  await Server.register(ListPlugin);
 
   exploreFolder(Server);
 

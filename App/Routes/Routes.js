@@ -1,9 +1,7 @@
-export const Route = () => [
+export const Route = (handler) => [
         {
             method: 'GET',
             path: '/',
-            handler: function (request,h){
-               return h.response('Lorem Ipsum').code(200);
-            }
+            handler: handler.main,
         }
     ];
