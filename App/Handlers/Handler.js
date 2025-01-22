@@ -10,6 +10,11 @@ export class Handler{
     async main()
     {
         const conn = new Database();
+        let db = {
+            data: "Rasya"
+        }
+        const res =  await conn.getAll(db.data);
+        console.log(res);
         console.log('Handler Running');
         return "Hi";
     }
