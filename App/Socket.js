@@ -21,4 +21,5 @@ import { ListPlugin } from "./Plugins/ListPlugin.js";
   exploreFolder(Server);
 
   await Server.start();
+  console.info(`Server Running : ${Server.info.protocol}://${Server.info.host}:${Server.info.port}`)
 })();

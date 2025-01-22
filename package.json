@@ -6,8 +6,7 @@
     "dev": "nodemon ./App/Socket",
     "start": "node ./App/Socket",
     "make-migration": "node ./App/Core/Create_Migration",
-    "migration": "node ./App/Core/Migration",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "migration": "node ./App/Core/Migration"
   },
   "type": "module",
   "keywords": [],
