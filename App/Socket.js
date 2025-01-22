@@ -6,6 +6,7 @@ import { ListPlugin } from "./Plugins/ListPlugin.js";
 import Vision from "@hapi/vision";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+import inert from "@hapi/inert";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ViewPath = path.join(__dirname, "../");
@@ -26,8 +27,26 @@ const ViewPath = path.join(__dirname, "../");
     engines: {
       ejs: await import("ejs"),
     },
+    isCached: false,
     relativeTo: ViewPath,
     path: "Views",
+    partialsPath: "Views/partials",
+    layoutPath: "Views/template",
+    layout:true,
+  });
+
+  await Server.register(inert);
+
+  Server.route({
+    method: "GET",
+    path:"/resource/{file*}",
+    handler: {
+      directory:{
+        path:"Resource",
+        redirectToSlash:true,
+        listing: false,
+      }
+    }
   });
 
   await Server.register(ListPlugin);

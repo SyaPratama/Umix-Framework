@@ -6,7 +6,6 @@ export default class Middleware{
     }
     async before(){
         this.server.ext('onRequest',async function(req,h){
-            console.log("Middleware Main");
             return h.continue;
         });
     };

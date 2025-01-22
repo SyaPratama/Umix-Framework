@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "nodemon ./App/Socket",
     "start": "node ./App/Socket",
-    "make-migration": "node ./App/Core/Create_Migration",
-    "migration": "node ./App/Core/Migration"
+    "migration:make": "node ./App/Core/Create_Migration",
+    "migration:run": "node ./App/Core/Migration",
+    "css:build": "postcss ./Resource/css/main.css -o Resource/css/styles.css",
+    "css:watch": "postcss ./Resource/css/main.css -o Resource/css/styles.css --watch"
   },
   "type": "module",
   "keywords": [],
@@ -15,13 +17,18 @@
   "description": "",
   "dependencies": {
     "@hapi/hapi": "^21.3.12",
+    "@hapi/inert": "^7.1.0",
     "@hapi/vision": "^5.5.1",
     "@inquirer/prompts": "^7.2.3",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "mysql2": "^3.12.0"
+    "mysql2": "^3.12.0",
+    "postcss-cli": "^11.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "autoprefixer": "^10.4.20",
+    "nodemon": "^3.1.9",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
   }
 }
