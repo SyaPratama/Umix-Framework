@@ -3,6 +3,7 @@ class Controller {
     {
         this.login = this.login.bind(this);
         this.dashboard = this.dashboard.bind(this);
+        this.register = this.register.bind(this);
     }
 
     async login(req,h){
@@ -12,11 +13,6 @@ class Controller {
     async dashboard(req,h)
     {
         return h.view('main/dashboard/main', { title: "Dashboard Admin", username: "Rasya Putra Pratama" });
-    }
-
-    async register(req,h)
-    {
-        return h.view('main/authentication/register', { title: "Register User" });
     }
 }
 

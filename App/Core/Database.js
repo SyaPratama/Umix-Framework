@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise";
 import "dotenv/config";
+import { exec } from "child_process"
 import { select } from "@inquirer/prompts";
 export class Database {
   constructor() {
@@ -49,8 +50,8 @@ export class Database {
               });
 
               await createDB.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);
-              console.info('Database Berhasil Dibuat Silahkan Migrasi Ulang');
-              return process.exit(0);
+              console.info('Database Berhasil Dibuat! Menunggu Migrasi Ulang');
+              return exec("npm run migration:run");
             }
           }
         }
