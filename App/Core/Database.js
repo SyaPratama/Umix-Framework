@@ -1,44 +1,61 @@
 import mysql from "mysql2/promise";
 import "dotenv/config";
+import { select } from "@inquirer/prompts";
 export class Database {
   constructor() {
     this.pool;
   }
   async connection() {
-    try {
-      const connect = mysql.createPool({
+      const pool = mysql.createPool({
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
-        waitForConnections: true,
-        keepAliveInitialDelay: 0,
-        enableKeepAlive: true,
-        connectionLimit: 10,
-        jsonStrings: true,
         namedPlaceholders: true,
       });
 
-      this.pool = connect;
-      return connect;
-    } catch (e) {
-      const connect = mysql.createPool({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        namedPlaceholders: true,
-      });
-      const regex = new RegExp(/\bUnknown database\b/);
-      if (regex.test(e.message)) {
-        await connect?.query(
-          `CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`
-        );
-        return;
+      try{
+        const connection  = await pool.getConnection();
+        this.pool = connection;
+        return connection;
+      }catch(e)
+      { 
+        if(e instanceof Error)
+        {
+          const regex = new RegExp(/\bUnknown database\b/);
+          if(regex.test(e.message))
+          {
+            const answer = await select({
+              message: "Database Tidak Ada Apakah Anda Ingin Membuat Database?",
+              choices:[
+                {
+                  name: 'Yes',
+                  value:true,
+                },
+                {
+                  name: 'No',
+                  value: false,
+                }
+              ]
+            });
+            if(answer)
+            {
+              const createDB = mysql.createPool({
+                host: process.env.DB_HOST,
+                port:process.env.DB_PORT,
+                user:process.env.DB_USER,
+                password: process.env.DB_PASS,
+              });
+
+              await createDB.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);
+              console.info('Database Berhasil Dibuat Silahkan Migrasi Ulang');
+              return process.exit(0);
+            }
+          }
+        }
+        return process.exit(0);
       }
-      throw e;
-    }
   }
 
   async getAll(table) {

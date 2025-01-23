@@ -1,7 +1,7 @@
 export const Route = (handler) => [
         {
             method: 'GET',
-            path: '/',
+            path: '/login',
             handler: handler.login,
         },
         {
