@@ -7,6 +7,9 @@ import Vision from "@hapi/vision";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import inert from "@hapi/inert";
+import Cookie from "@hapi/cookie"
+import bcrypt from "bcrypt";
+import { Database } from "./Core/Database.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ViewPath = path.join(__dirname, "../");
@@ -40,6 +43,9 @@ const ViewPath = path.join(__dirname, "../");
   Server.route({
     method: "GET",
     path:"/resource/{file*}",
+    options: {
+      auth:false,
+    },
     handler: {
       directory:{
         path:"Resource",
@@ -49,10 +55,33 @@ const ViewPath = path.join(__dirname, "../");
     }
   });
 
+  await Server.register(Cookie);
+
+  Server.auth.strategy('session','cookie',{
+    cookie: {
+      name: "SESSION_LOGIN",
+      password: process.env.APP_COOKIE,
+      isSecure: false,
+      ttl: 24 * 60 * 60 * 1000,
+      path: "/",
+    },
+    redirectTo:'/login',  
+    validate: async (req,session) => {
+      const db = new Database();
+      const findToken = await db.where('personal_access_tokens','user_id',{ user_id: session.id });
+      if(findToken.find(n => n.token === session.token))
+      {
+        return { isValid: true, credentials: session.user };
+      }
+      return { isValid: false };
+    },
+  });
+
+  Server.auth.default('session');
+
+  await exploreFolder(Server);
   await Server.register(ListPlugin);
-
-  exploreFolder(Server);
-
+  
   await Server.start();
   console.info(
     `Server Running : ${Server.info.protocol}://${Server.info.host}:${Server.info.port}`

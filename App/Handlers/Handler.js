@@ -1,5 +1,3 @@
-import { Database } from "../Core/Database.js";
-
 export class Handler{
     constructor(Service)
     {
@@ -7,6 +5,8 @@ export class Handler{
         this.login = this.login.bind(this);
         this.dashboard = this.dashboard.bind(this);
         this.register = this.register.bind(this);
+        this.regist_handler = this.regist_handler.bind(this);
+        this.login_handler = this.login_handler.bind(this);
     }
 
     async login(req,h)
@@ -22,5 +22,15 @@ export class Handler{
     async register(req,h)
     {
         return await this.Service.register(req,h);
+    }
+
+    async regist_handler(req,h)
+    {
+        return await this.Service.regist_handler(req,h);
+    }
+
+    async login_handler(req,h)
+    {
+        return await this.Service.login_handler(req,h);
     }
 }

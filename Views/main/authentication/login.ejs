@@ -1,16 +1,30 @@
 <!-- component -->
  <body class="bg-white dark:bg-[#0F172A]">
+
+  <!-- ALERT -->
+  <div class="w-[100%] flex justify-center absolute top-5">
+
+  <div hidden class="alert" role="alert">
+    <span class="block sm:inline" id="text_alert"></span>
+    <span class="absolute top-0 bottom-0 right-0 px-4 py-3" id="close">
+      <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+    </span>
+  </div>
+  </div>
+
   <div class="min-h-screen dark:bg-[#0F172A] flex items-center justify-center p-4">
   <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
     <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Sign In</h2>
 
-    <form class="space-y-4">
+    <form id="login" class="space-y-4">
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1"
           >Email</label
         >
         <input
           type="email"
+          name="email"
+          id="email"
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
           placeholder="your@email.com"
         />
@@ -22,6 +36,8 @@
         >
         <input
           type="password"
+          name="password"
+          id="password"
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
           placeholder="••••••••"
         />
@@ -41,6 +57,7 @@
       </div>
 
       <button
+      type="submit"
         class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition-colors"
       >
         Sign In
@@ -55,4 +72,5 @@
     </div>
   </div>
 </div>
+<script src="/resource/js/event.js"></script>
 </body>
