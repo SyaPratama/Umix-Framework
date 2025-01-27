@@ -84,4 +84,49 @@ export class Database {
       throw new Error(e);
     }
   }
+
+  async where(table,column,value)
+  {
+    try{
+      await this.connection();
+      const res = await this.pool?.execute(`SELECT * FROM ${table} WHERE ${column} = :${column}`,value);
+      return res[0];
+    }catch(e)
+    {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+
+  async raw(sql)
+  {
+    try{
+      await this.connection();
+      const res = await this.pool?.query(sql);
+      return res;
+    }catch(e)
+    {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+
+  async insert(table,obj)
+  {
+    try{
+      await this.connection();
+      let data = Object.keys(obj);
+      let dataKeys = data.join(',');
+      data = data.map(v => {
+        return `:${v}`;
+      })
+      data = data.join(',');
+      const res = await this.pool?.execute(`INSERT INTO ${table} (${dataKeys}) VALUES(${data})`,obj);
+      return res;
+    }catch(e)
+    {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
 }
