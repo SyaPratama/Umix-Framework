@@ -32,7 +32,7 @@ export class Authentication {
     }
   }
 
-  async login({ email, password }) {
+  async login({ email, password, remember}) {
     const findUser = await this.connection.where("users", "email", { email });
     if (findUser.length > 0) {
       const comparePassword = bcrypt.compareSync(
@@ -40,9 +40,10 @@ export class Authentication {
         findUser[0].password
       );
       if (comparePassword){
+        let expired = /true/.test(remember) ? ( 24 * 60 * 60 * 1000 ) * 30.44  : 24 * 60 * 60 * 1000;
         const token = bcrypt.hashSync(`${findUser[0].id}`, 12);
         const currentDate = new Date().getTime();
-        const expired_time = currentDate + 24 * 60 * 60 * 1000;
+        const expired_time = currentDate + expired;
         const expired_at = new Date(expired_time);
         const newObj = {
           user_id: findUser[0].id,
@@ -55,6 +56,7 @@ export class Authentication {
           message: "Berhasil Login",
           account: findUser,
           token,
+          expired_at: expired,
           redirect: "/",
           code: 200,
         };

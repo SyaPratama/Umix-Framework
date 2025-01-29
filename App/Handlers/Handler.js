@@ -7,6 +7,7 @@ export class Handler{
         this.register = this.register.bind(this);
         this.regist_handler = this.regist_handler.bind(this);
         this.login_handler = this.login_handler.bind(this);
+        this.signout = this.signout.bind(this);
     }
 
     async login(req,h)
@@ -32,5 +33,10 @@ export class Handler{
     async login_handler(req,h)
     {
         return await this.Service.login_handler(req,h);
+    }
+
+    async signout(req,h)
+    {
+        return await this.Service.signout(req,h);
     }
 }

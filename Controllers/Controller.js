@@ -38,24 +38,24 @@ class Controller {
       return response;
     } else {
       const result = await Service.registration(data);
-      const response = h
-        .response(result)
-        .code(result.code);
+      const response = h.response(result).code(result.code);
       response.header("Content-Type", "application/json");
       response.header("Accept", "application/json");
       return response;
     }
   }
 
-  async login_handler(req,h)
-  {
-
+  async login_handler(req, h) {
     const data = req.payload;
     const Service = new Authentication();
     const result = await Service.login(data);
-    if(result.code === 200)
-    {
-      req.cookieAuth.set({id: result.account[0].id, token: result.token,user: result.account});
+    if (result.code === 200) {
+      req.cookieAuth.set({
+        id: result.account[0].id,
+        token: result.token,
+        user: result.account,
+      });
+      req.cookieAuth.ttl(result.expired_at);  
       const res = {
         status: result.status,
         message: result.message,
@@ -63,15 +63,30 @@ class Controller {
         code: result.code,
       };
       const response = h.response(res).code(res.code);
-      response.header("Content-Type","application/json");
-      response.header("Accept","application/json");
+      response.header("Content-Type", "application/json");
+      response.header("Accept", "application/json");
       return response;
     } else {
       const response = h.response(result).code(result.code);
-      response.header("Content-Type","application/json");
-      response.header("Accept","application/json");
+      response.header("Content-Type", "application/json");
+      response.header("Accept", "application/json");
       return response;
     }
+  }
+
+  async signout(req, h) {
+    req.cookieAuth.clear();
+    const response = h
+      .response({
+        status: 200,
+        message: "Berhasil Logout",
+        redirect: "/login",
+        code: 200,
+      })
+      .code(200);
+    response.header("Content-Type", "application/json");
+    response.header("Accept", "application/json");
+    return response;
   }
 }
 

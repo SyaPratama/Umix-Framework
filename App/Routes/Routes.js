@@ -60,8 +60,14 @@ export const Route = (handler) => [
             .email({ minDomainSegments: 2, tlds: ["com", "net", "id"] })
             .required(),
           password: Joi.string().min(5).required(),
+          remember: Joi.required(),
         }),
       },
     },
   },
+  {
+    method: "POST",
+    path: "/signout",
+    handler: handler.signout,
+  }
 ];
