@@ -129,4 +129,17 @@ export class Database {
       throw new Error(e);
     }
   }
+
+  async deleted(table,id)
+  {
+    try{
+      await this.connection();
+      const res = await this.pool?.execute(`DELETE FROM ${table} WHERE id = :id`, { id });
+      return res;
+    }catch(e)
+    {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
 }

@@ -4,8 +4,6 @@ import bcrypt from "bcrypt";
 export class Authentication {
   constructor() {
     this.connection = new Database();
-    this.registration = this.registration.bind(this);
-    this.login = this.login.bind(this);
   }
 
   async registration({ username, password, email }) {

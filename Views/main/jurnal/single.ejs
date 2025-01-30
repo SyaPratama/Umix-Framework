@@ -1,0 +1,36 @@
+<body class="body bg-slate-400 dark:bg-[#0F172A] min-h-[100dvh] flex justify-center">
+    <div class="w-[50%] max-md:w-full min-h-[100vh] h-[100%] dark:bg-slate-700 bg-slate-800">
+        <div>
+            <a href="/" class="text-white cursor-pointer fixed lg:left-[26.3%] md:left-[27.5%] sm:left-[4%] top-5 text-[22px]">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a href="/">
+            <div class="dropdown relative">
+                <button  id="dotIcons" data-dropdown-toggle="dropDown" class="text-white cursor-pointer fixed lg:right-[27.3%] md:right-[28.5%] sm:right-[8%] top-5 text-[22px]">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                    
+                    <!-- Dropdown menu -->
+                    <div id="dropDown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 sm:w-28 dark:bg-gray-700 dark:divide-gray-600">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dotIcons">
+                          <li>
+                            <a id="deleteJurnal" data-id="<%= data.id %>" class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Deleted</a>
+                          </li>
+                        </ul>
+                    </div>
+            </div>
+        </div>
+
+        <header class="w-full min-h-28 pt-[4rem] border-b-[3px] dark:border-slate-800 border-slate-400">
+            <textarea id="titleInput" 
+                class="px-5 w-full h-auto resize-none bg-transparent text-gray-300 text-[1.5rem] text-left whitespace-pre-wrap overflow-hidden"
+                placeholder="...Judul"><%= data.title %></textarea>
+        </header>
+        <main class="w-full h-[100%] pt-8 pb-2">
+            <textarea id="contentInput" 
+                class="px-5 w-full h-auto resize-none bg-transparent text-gray-300 text-[1.2rem] text-left whitespace-pre-wrap overflow-hidden"
+                placeholder="...Content"><%= data.content %></textarea>
+        </main>
+    </div>
+
+    <script src="/resource/js/single.js" crossorigin="anonymous"></script>
+</body>

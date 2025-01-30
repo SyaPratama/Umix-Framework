@@ -69,5 +69,25 @@ export const Route = (handler) => [
     method: "POST",
     path: "/signout",
     handler: handler.signout,
+  },
+  {
+    method: "POST",
+    path: "/jurnal",
+    handler: handler.addJurnal,
+  },
+  {
+    method: "GET",
+    path: "/jurnal/{id}",
+    handler: handler.getJurnalID
+  },
+  {
+    method: "DELETE",
+    path: "/jurnal/{id}",
+    handler: handler.deleteJurnalByID
+  },
+  {
+    method: "PUT",
+    path: "/jurnal/{id}",
+    handler: handler.updateJurnalByID
   }
 ];

@@ -1,0 +1,5 @@
+export default { 
+    up:"CREATE TABLE IF NOT EXISTS  jurnals (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,title VARCHAR(255),content TEXT,created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)",
+    down:"DROP TABLE jurnals" 
+}
+    
